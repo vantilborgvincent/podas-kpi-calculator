@@ -55,7 +55,7 @@ export default function Home() {
     };
 
     emailjs
-      .send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", templateParams, "YOUR_PUBLIC_KEY")
+      .send("service_sdzz11f", "template_guwz73d", templateParams, "-FsQ2G8CmhnyhIQZW")
       .then(() => {
         setStep("thankyou");
       })
