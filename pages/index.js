@@ -186,28 +186,29 @@ export default function Home() {
     }
   };
 
-  // Create the Podds logo as an SVG
-  // This is based on the colors from the logo in the uploaded image
+  // Improved Podds logo as an SVG
   const PoddsLogo = () => (
-    <svg width="240" height="80" viewBox="0 0 600 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 30H100V170H50V30Z" fill="#0F3A4D"/>
-      <path d="M120 100C120 61.34 151.34 30 190 30H240C278.66 30 310 61.34 310 100C310 138.66 278.66 170 240 170H190C151.34 170 120 138.66 120 100Z" fill="#0F3A4D"/>
-      <path d="M190 65H240C259.33 65 275 80.67 275 100C275 119.33 259.33 135 240 135H190C170.67 135 155 119.33 155 100C155 80.67 170.67 65 190 65Z" fill="white"/>
-      <path d="M330 100C330 61.34 361.34 30 400 30H450C488.66 30 520 61.34 520 100C520 138.66 488.66 170 450 170H400C361.34 170 330 138.66 330 100Z" fill="#0F3A4D"/>
-      <path d="M400 65H450C469.33 65 485 80.67 485 100C485 119.33 469.33 135 450 135H400C380.67 135 365 119.33 365 100C365 80.67 380.67 65 400 65Z" fill="white"/>
-      <path d="M540 30C540 30 590 30 590 80V170H540V30Z" fill="#E7440D"/>
+    <svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {/* P */}
+      <rect x="10" y="10" width="15" height="40" fill="#0F3A4D" />
+      {/* First O */}
+      <path d="M35 30C35 19.5 43.5 10 55 10H65C76.5 10 85 19.5 85 30C85 40.5 76.5 50 65 50H55C43.5 50 35 40.5 35 30Z" fill="#0F3A4D" />
+      <path d="M55 20H65C70.5 20 75 24.5 75 30C75 35.5 70.5 40 65 40H55C49.5 40 45 35.5 45 30C45 24.5 49.5 20 55 20Z" fill="white" />
+      {/* Second O */}
+      <path d="M95 30C95 19.5 103.5 10 115 10H125C136.5 10 145 19.5 145 30C145 40.5 136.5 50 125 50H115C103.5 50 95 40.5 95 30Z" fill="#0F3A4D" />
+      <path d="M115 20H125C130.5 20 135 24.5 135 30C135 35.5 130.5 40 125 40H115C109.5 40 105 35.5 105 30C105 24.5 109.5 20 115 20Z" fill="white" />
+      {/* D */}
+      <path d="M155 10H165C180 10 190 20 190 30C190 40 180 50 165 50H155V10Z" fill="#0F3A4D" />
+      {/* S */}
+      <path d="M200 10C200 10 220 10 220 25V50H200V10Z" fill="#E7440D" />
     </svg>
   );
 
-  // Tagline SVG for the "Making digital Automation and AI accessible" text
+  // Improved tagline SVG
   const TaglineSVG = () => (
-    <svg width="600" height="40" viewBox="0 0 600 40" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <text x="0" y="20" fontFamily="Poppins" fontSize="20" fontWeight="500" fill="#0F3A4D">Making</text>
-      <text x="80" y="20" fontFamily="Poppins" fontSize="20" fontWeight="500" fill="#E7440D">digital Automation</text>
-      <text x="300" y="20" fontFamily="Poppins" fontSize="20" fontWeight="500" fill="#0F3A4D">and</text>
-      <text x="350" y="20" fontFamily="Poppins" fontSize="20" fontWeight="500" fill="#E7440D">AI</text>
-      <text x="380" y="20" fontFamily="Poppins" fontSize="20" fontWeight="500" fill="#0F3A4D">accessible to every business</text>
-    </svg>
+    <div style={{ fontSize: "14px", color: "#0F3A4D", marginTop: "5px" }}>
+      Making <span style={{ color: "#E7440D" }}>digital Automation</span> and <span style={{ color: "#E7440D" }}>AI</span> accessible to every business
+    </div>
   );
 
   // Main rendering
@@ -220,9 +221,7 @@ export default function Home() {
       <div style={styles.container}>
         <div style={styles.header}>
           <PoddsLogo />
-          <div style={{ marginTop: "10px" }}>
-            <TaglineSVG />
-          </div>
+          <TaglineSVG />
         </div>
 
         {step === "start" && (
