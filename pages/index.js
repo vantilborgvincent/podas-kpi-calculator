@@ -183,33 +183,16 @@ export default function Home() {
       fontSize: "20px",
       fontWeight: "600",
       marginBottom: "15px"
+    },
+    tagline: {
+      fontSize: "14px", 
+      color: "#0F3A4D", 
+      marginTop: "5px"
+    },
+    taglineHighlight: {
+      color: "#E7440D"
     }
   };
-
-  // Improved Podds logo as an SVG
-  const PoddsLogo = () => (
-    <svg width="240" height="60" viewBox="0 0 240 60" fill="none" xmlns="http://www.w3.org/2000/svg">
-      {/* P */}
-      <rect x="10" y="10" width="15" height="40" fill="#0F3A4D" />
-      {/* First O */}
-      <path d="M35 30C35 19.5 43.5 10 55 10H65C76.5 10 85 19.5 85 30C85 40.5 76.5 50 65 50H55C43.5 50 35 40.5 35 30Z" fill="#0F3A4D" />
-      <path d="M55 20H65C70.5 20 75 24.5 75 30C75 35.5 70.5 40 65 40H55C49.5 40 45 35.5 45 30C45 24.5 49.5 20 55 20Z" fill="white" />
-      {/* Second O */}
-      <path d="M95 30C95 19.5 103.5 10 115 10H125C136.5 10 145 19.5 145 30C145 40.5 136.5 50 125 50H115C103.5 50 95 40.5 95 30Z" fill="#0F3A4D" />
-      <path d="M115 20H125C130.5 20 135 24.5 135 30C135 35.5 130.5 40 125 40H115C109.5 40 105 35.5 105 30C105 24.5 109.5 20 115 20Z" fill="white" />
-      {/* D */}
-      <path d="M155 10H165C180 10 190 20 190 30C190 40 180 50 165 50H155V10Z" fill="#0F3A4D" />
-      {/* S */}
-      <path d="M200 10C200 10 220 10 220 25V50H200V10Z" fill="#E7440D" />
-    </svg>
-  );
-
-  // Improved tagline SVG
-  const TaglineSVG = () => (
-    <div style={{ fontSize: "14px", color: "#0F3A4D", marginTop: "5px" }}>
-      Making <span style={{ color: "#E7440D" }}>digital Automation</span> and <span style={{ color: "#E7440D" }}>AI</span> accessible to every business
-    </div>
-  );
 
   // Main rendering
   return (
@@ -220,8 +203,15 @@ export default function Home() {
       
       <div style={styles.container}>
         <div style={styles.header}>
-          <PoddsLogo />
-          <TaglineSVG />
+          {/* Use an image placeholder instead of SVG */}
+          <img 
+            src="/api/placeholder/240/60" 
+            alt="Podds Logo" 
+            style={styles.logo} 
+          />
+          <div style={styles.tagline}>
+            Making <span style={styles.taglineHighlight}>digital Automation</span> and <span style={styles.taglineHighlight}>AI</span> accessible to every business
+          </div>
         </div>
 
         {step === "start" && (
