@@ -61,12 +61,12 @@ export default function Home() {
       .catch((error) => console.error("Email error:", error));
   };
 
-  // Styles based on Podds logo colors
+  // Improved styles based on Podas logo colors
   const styles = {
     container: {
-      maxWidth: "900px",
+      maxWidth: "1000px",
       margin: "0 auto",
-      padding: "30px 20px",
+      padding: "40px 20px",
       fontFamily: "'Poppins', sans-serif",
       color: "#0F3A4D",
       minHeight: "100vh",
@@ -75,46 +75,53 @@ export default function Home() {
     },
     header: {
       marginBottom: "40px",
-      textAlign: "center"
+      textAlign: "center",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center"
     },
     logo: {
       width: "240px",
       height: "auto",
-      margin: "0 auto 30px",
+      margin: "0 auto 20px",
       display: "block"
     },
     title: {
       fontSize: "32px",
       fontWeight: "700",
-      marginBottom: "16px",
-      color: "#0F3A4D"
+      marginBottom: "20px",
+      color: "#0F3A4D",
+      textAlign: "center"
     },
     subtitle: {
       fontSize: "20px",
       marginBottom: "30px",
-      lineHeight: "1.5",
-      fontWeight: "400"
+      lineHeight: "1.6",
+      fontWeight: "400",
+      textAlign: "center"
     },
     card: {
       backgroundColor: "#fff",
       borderRadius: "12px",
-      padding: "30px",
-      boxShadow: "0 4px 20px rgba(15, 58, 77, 0.1)",
-      maxWidth: "600px",
-      margin: "0 auto",
+      padding: "35px",
+      boxShadow: "0 8px 30px rgba(15, 58, 77, 0.1)",
+      maxWidth: "650px",
+      margin: "0 auto 40px",
       width: "100%"
     },
     button: {
       backgroundColor: "#E7440D",
       color: "white",
       border: "none",
-      borderRadius: "6px",
-      padding: "14px 28px",
+      borderRadius: "8px",
+      padding: "16px 30px",
       fontSize: "16px",
       fontWeight: "600",
       cursor: "pointer",
       transition: "background-color 0.3s",
-      margin: "10px 5px"
+      margin: "10px 5px",
+      width: "auto",
+      minWidth: "200px"
     },
     buttonHover: {
       backgroundColor: "#C53C0D"
@@ -123,8 +130,8 @@ export default function Home() {
       backgroundColor: "#FFFFFF",
       color: "#0F3A4D",
       border: "2px solid #0F3A4D",
-      borderRadius: "6px",
-      padding: "12px 26px",
+      borderRadius: "8px",
+      padding: "14px 28px",
       fontSize: "16px",
       fontWeight: "600",
       cursor: "pointer",
@@ -138,59 +145,78 @@ export default function Home() {
       color: "white"
     },
     formGroup: {
-      marginBottom: "22px"
+      marginBottom: "24px"
     },
     label: {
       display: "block",
-      marginBottom: "8px",
-      fontWeight: "500"
+      marginBottom: "10px",
+      fontWeight: "500",
+      fontSize: "16px"
     },
     input: {
       width: "100%",
-      padding: "12px 16px",
+      padding: "14px 16px",
       fontSize: "16px",
-      borderRadius: "6px",
-      border: "1px solid #ccc",
-      marginBottom: "5px"
+      borderRadius: "8px",
+      border: "1px solid #d1d5db",
+      marginBottom: "5px",
+      boxSizing: "border-box"
     },
     select: {
       width: "100%",
-      padding: "12px 16px",
+      padding: "14px 16px",
       fontSize: "16px",
-      borderRadius: "6px",
-      border: "1px solid #ccc"
+      borderRadius: "8px",
+      border: "1px solid #d1d5db",
+      boxSizing: "border-box"
     },
     results: {
       backgroundColor: "#F5F7F9",
-      padding: "20px",
-      borderRadius: "8px",
-      marginBottom: "30px"
+      padding: "25px",
+      borderRadius: "10px",
+      marginBottom: "35px"
     },
     resultItem: {
-      margin: "10px 0",
+      margin: "12px 0",
       fontSize: "18px",
       display: "flex",
-      justifyContent: "space-between"
+      justifyContent: "space-between",
+      padding: "8px 0",
+      borderBottom: "1px solid #e5e7eb"
     },
     footer: {
-      marginTop: "40px",
+      marginTop: "auto",
       textAlign: "center",
       fontSize: "14px",
-      color: "#6B7280"
+      color: "#6B7280",
+      padding: "20px 0"
     },
     resultHeading: {
       color: "#E7440D",
-      fontSize: "20px",
+      fontSize: "22px",
       fontWeight: "600",
-      marginBottom: "15px"
+      marginBottom: "18px"
     },
     tagline: {
-      fontSize: "14px", 
+      fontSize: "16px", 
       color: "#0F3A4D", 
-      marginTop: "5px"
+      marginTop: "10px",
+      lineHeight: "1.5"
     },
     taglineHighlight: {
-      color: "#E7440D"
+      color: "#E7440D",
+      fontWeight: "500"
+    },
+    buttonContainer: {
+      display: "flex",
+      justifyContent: "center",
+      marginTop: "35px"
+    },
+    sectorContainer: {
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "15px"
     }
   };
 
@@ -203,10 +229,10 @@ export default function Home() {
       
       <div style={styles.container}>
         <div style={styles.header}>
-          {/* Use an image placeholder instead of SVG */}
+          {/* Use the path to your actual logo image */}
           <img 
-            src="/api/placeholder/240/60" 
-            alt="Podds Logo" 
+            src="/logo.png" 
+            alt="Podas Logo" 
             style={styles.logo} 
           />
           <div style={styles.tagline}>
@@ -236,7 +262,7 @@ export default function Home() {
         {step === "sector" && (
           <div style={styles.card}>
             <h2 style={{...styles.title, fontSize: "26px"}}>In welke sector is uw bedrijf actief?</h2>
-            <div style={{textAlign: "center", marginTop: "30px"}}>
+            <div style={styles.sectorContainer}>
               {sectors.map((s) => (
                 <button 
                   key={s} 
@@ -455,7 +481,7 @@ export default function Home() {
               </>
             )}
             
-            <div style={{textAlign: "center", marginTop: "30px"}}>
+            <div style={styles.buttonContainer}>
               <button 
                 onClick={calculateKPI} 
                 style={styles.button}
@@ -506,7 +532,7 @@ export default function Home() {
               <input name="phone" style={styles.input} onChange={handleInputChange} />
             </div>
             
-            <div style={{textAlign: "center", marginTop: "30px"}}>
+            <div style={styles.buttonContainer}>
               <button 
                 onClick={sendEmail} 
                 style={styles.button}
@@ -539,7 +565,7 @@ export default function Home() {
               <div style={{marginTop: "40px"}}>
                 <a 
                   href="/"
-                  style={{...styles.button, textDecoration: "none"}}
+                  style={{...styles.button, textDecoration: "none", display: "inline-block"}}
                   onMouseOver={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
                   onMouseOut={e => e.target.style.backgroundColor = styles.button.backgroundColor}
                 >
@@ -551,7 +577,7 @@ export default function Home() {
         )}
         
         <div style={styles.footer}>
-          <p>© {new Date().getFullYear()} Podds - Making digital Automation and AI accessible to every business</p>
+          <p>© {new Date().getFullYear()} Podas - Making digital Automation and AI accessible to every business</p>
         </div>
       </div>
     </>
