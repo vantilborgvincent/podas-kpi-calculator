@@ -305,17 +305,17 @@ export default function Home() {
       results: JSON.stringify(results, null, 2),
     };
     
-    emailjs
+emailjs
   .send(
     process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_sdzz11f",
     process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_guwz73d",
     templateParams,
     process.env.NEXT_PUBLIC_EMAILJS_USER_ID || "-FsQ2G8CmhnyhIQZW"
   )
-      .then(() => {
-        setStep("thankyou");
-      })
-      .catch((error) => console.error("Email error:", error));
+  .then(() => {
+    setStep("thankyou");
+  })
+  .catch((error) => console.error("Email error:", error));
   };
 
   // Reset the flow to start again
@@ -911,3 +911,4 @@ export default function Home() {
       </div>
     </>
   );
+  }
