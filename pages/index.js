@@ -778,9 +778,7 @@ export default function Home() {
             
             <div style={{marginTop: "30px", padding: "20px", backgroundColor: "#F5F7F9", borderRadius: "8px"}}>
               <p style={{fontSize: "16px", lineHeight: "1.6", fontStyle: "italic", color: "#4B5563"}}>
-                De KPI's geven samen een beeld van jouw {cluster === "cashflow" ? "cashflowbeheer" : 
-                                                        cluster === "margin" ? "rendabiliteit" : 
-                                                        "klanttevredenheid"}. 
+                De KPI's geven samen een beeld van jouw {cluster}.
                 Geen enkele KPI op zichzelf is bepalend. De onderlinge balans is essentieel.
               </p>
             </div>
