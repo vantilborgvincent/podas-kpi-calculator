@@ -756,33 +756,33 @@ style={styles.clusterButton}
             <div style={styles.results}>
               <h3 style={styles.resultHeading}>Berekende KPI's:</h3>
               
-              {results.kpiResults && Object.entries(results.kpiResults).map(([key, value], idx) => {
-                const currentKPI = clusters[cluster].kpis.find(kpi => kpi.title === key || key.includes(kpi.title));
-                
-                return (
-                  <div key={idx} style={styles.resultSection}>
-                    <div style={styles.resultItem}>
-                      <strong>{key}:</strong>
-                      <span>{value}</span>
-                    </div>
-                    
-                    {currentKPI && (
-                      <>
-                        <div style={styles.benchmarkContainer}>
-                          <div style={styles.benchmarkHeading}>Benchmark:</div>
-                          <div>{currentKPI.benchmark}</div>
-                        </div>
-                        
-                        <div style={styles.interpretationContainer}>
-                          <div style={styles.interpretationText}>
-                            {currentKPI.interpretation}
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                );
-              })}
+{results.kpiResults && Object.entries(results.kpiResults).map(([key, value], idx) => {
+    const currentKPI = clusters[cluster].kpis.find(kpi => kpi.title === key || key.includes(kpi.title));
+
+    return (
+      <div key={idx} style={styles.resultSection}>
+        <div style={styles.resultItem}>
+          <strong>{key}:</strong>
+          <span>{value}</span>
+        </div>
+
+        {currentKPI && (
+          <>
+            <div style={styles.benchmarkContainer}>
+              <div style={styles.benchmarkHeading}>Benchmark:</div>
+              <div>{currentKPI.benchmark}</div>
+            </div>
+            
+            <div style={styles.interpretationContainer}>
+              <div style={styles.interpretationText}>
+                {currentKPI.interpretation}
+              </div>
+            </div>
+          </>
+        )}
+      </div>  {/* <== this closes the block */}
+    );
+})}
             </div>
             
             {/* Data Maturity Summary */}
