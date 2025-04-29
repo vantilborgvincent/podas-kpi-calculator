@@ -624,7 +624,6 @@ export default function Home() {
         <div style={styles.progressText}>{progress}% voltooid</div>
       </div>
     );
-}
   };
 
   // Main rendering
@@ -667,6 +666,45 @@ export default function Home() {
                 onClick={() => setStep("cluster")}
               >
                 Start de KPI-analyse
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Cluster selection */}
+        {step === "cluster" && (
+          <div style={styles.card}>
+            <h2 style={{...styles.title, fontSize: "26px"}}>Kies wat je wilt analyseren</h2>
+            
+            <div style={{marginTop: "25px"}}>
+              <button 
+                style={styles.clusterButton}
+                onMouseOver={e => e.target.style.backgroundColor = styles.clusterButtonHover.backgroundColor}
+                onMouseOut={e => e.target.style.backgroundColor = styles.clusterButton.backgroundColor}
+                onClick={() => handleClusterSelect("cashflow")}
+              >
+                Cashflow & Kapitaaloptimalisatie
+                <span style={styles.clusterArrow}>→</span>
+              </button>
+              
+              <button 
+                style={styles.clusterButton}
+                onMouseOver={e => e.target.style.backgroundColor = styles.clusterButtonHover.backgroundColor}
+                onMouseOut={e => e.target.style.backgroundColor = styles.clusterButton.backgroundColor}
+                onClick={() => handleClusterSelect("margin")}
+              >
+                Winstgevendheid & Margeoptimalisatie
+                <span style={styles.clusterArrow}>→</span>
+              </button>
+              
+              <button 
+                style={styles.clusterButton}
+                onMouseOver={e => e.target.style.backgroundColor = styles.clusterButtonHover.backgroundColor}
+                onMouseOut={e => e.target.style.backgroundColor = styles.clusterButton.backgroundColor}
+                onClick={() => handleClusterSelect("service")}
+              >
+                Servicekwaliteit & Groeiversnelling
+                <span style={styles.clusterArrow}>→</span>
               </button>
             </div>
           </div>
@@ -843,121 +881,6 @@ export default function Home() {
                   Terug naar begin
                 </button>
               </div>
-            </div>
-          </div>
-        )}
-        
-        <div style={styles.footer}>
-          <p>© {new Date().getFullYear()} Podas - Making digital Automation and AI accessible to every business</p>
-        </div>
-      </div>
-    </>
-  );
-
-        {/* Cluster selection */}
-        {step === "cluster" && (
-          <div style={styles.card}>
-            <h2 style={{...styles.title, fontSize: "26px"}}>Kies wat je wilt analyseren</h2>
-            
-            <div style={{marginTop: "25px"}}>
-              <button 
-                style={styles.clusterButton}
-                onMouseOver={e => e.target.style.backgroundColor = styles.clusterButtonHover.backgroundColor}
-                onMouseOut={e => e.target.style.backgroundColor = styles.clusterButton.backgroundColor}
-                onClick={() => handleClusterSelect("cashflow")}
-              >
-                Cashflow & Kapitaaloptimalisatie
-                <span style={styles.clusterArrow}>→</span>
-              </button>
-              
-              <button 
-                style={styles.clusterButton}
-                onMouseOver={e => e.target.style.backgroundColor = styles.clusterButtonHover.backgroundColor}
-                onMouseOut={e => e.target.style.backgroundColor = styles.clusterButton.backgroundColor}
-                onClick={() => handleClusterSelect("margin")}
-              >
-                Winstgevendheid & Margeoptimalisatie
-                <span style={styles.clusterArrow}>→</span>
-              </button>
-              
-              <button 
-                style={styles.clusterButton}
-                onMouseOver={e => e.target.style.backgroundColor = styles.clusterButtonHover.backgroundColor}
-                onMouseOut={e => e.target.style.backgroundColor = styles.clusterButton.backgroundColor}
-                onClick={() => handleClusterSelect("service")}
-              >
-                Servicekwaliteit & Groeiversnelling
-                <span style={styles.clusterArrow}>→</span>
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* KPI Questions */}
-        {step === "kpi" && cluster && (
-          <div style={styles.card}>
-            <h2 style={{...styles.title, fontSize: "24px", marginBottom: "10px"}}>
-              {clusters[cluster].name}
-            </h2>
-            <h3 style={{fontSize: "22px", fontWeight: "600", marginBottom: "25px", color: "#E7440D"}}>
-              {currentKPI}. {clusters[cluster].kpis[currentKPI-1].title}
-            </h3>
-            
-            {/* KPI specific questions */}
-            {clusters[cluster].kpis[currentKPI-1].questions.map((question, idx) => (
-              <div style={styles.formGroup} key={idx}>
-                <label style={styles.label}>{question.label}</label>
-                <input 
-                  name={`${question.name}_kpi${currentKPI}`}
-                  type={question.type} 
-                  placeholder={question.placeholder}
-                  style={styles.input}
-                  onChange={handleInputChange} 
-                  value={formData[`${question.name}_kpi${currentKPI}`] || ""}
-                />
-              </div>
-            ))}
-            
-            {/* Data maturity questions */}
-            <h4 style={{fontSize: "18px", fontWeight: "500", marginTop: "30px", marginBottom: "15px"}}>
-              Data beschikbaarheid
-            </h4>
-            
-            {dataMaturityQuestions.map((question, idx) => (
-              <div style={styles.formGroup} key={idx}>
-                <label style={styles.label}>{question.label}</label>
-                <select 
-                  name={`${question.name}_kpi${currentKPI}`}
-                  style={styles.select}
-                  onChange={handleInputChange}
-                  value={formData[`${question.name}_kpi${currentKPI}`] || ""}
-                >
-                  {question.options.map((option, optIdx) => (
-                    <option key={optIdx} value={option.value}>{option.label}</option>
-                  ))}
-                </select>
-              </div>
-            ))}
-            
-            {/* Navigation buttons */}
-            <div style={styles.kpiNavigationContainer}>
-              <button 
-                onClick={handlePrevKPI}
-                style={styles.secondaryButton}
-                onMouseOver={e => e.target.style.backgroundColor = styles.secondaryButtonHover.backgroundColor}
-                onMouseOut={e => e.target.style.backgroundColor = styles.secondaryButton.backgroundColor}
-              >
-                Terug
-              </button>
-              
-              <button 
-                onClick={handleNextKPI} 
-                style={styles.button}
-                onMouseOver={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
-                onMouseOut={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-              >
-                {currentKPI < clusters[cluster].kpis.length ? "Volgende" : "Resultaten bekijken"}
-              </button>
             </div>
           </div>
         )}
