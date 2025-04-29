@@ -781,7 +781,7 @@ style={styles.clusterButton}
             </div>
           </>
         )}
-      </div>  {/* <== this closes the block */}
+      </div>
     );
 })}
             </div>
