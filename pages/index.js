@@ -188,22 +188,23 @@ export default function Home() {
 
   // Navigate to the next KPI question
   const handleNextKPI = () => {
-    if (currentKPI < clusters[cluster].kpis.length) {
-      setCurrentKPI(currentKPI + 1);
-    } else {
-      calculateResults();
-      setStep("results");
-    }
-  };
-
+  if (currentKPI < clusters[cluster].kpis.length) {
+    setCurrentKPI(currentKPI + 1);
+  } else {
+    calculateResults();
+    setStep("results");
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
   // Navigate to the previous KPI question
   const handlePrevKPI = () => {
-    if (currentKPI > 1) {
-      setCurrentKPI(currentKPI - 1);
-    } else {
-      setStep("cluster");
-    }
-  };
+  if (currentKPI > 1) {
+    setCurrentKPI(currentKPI - 1);
+  } else {
+    setStep("cluster");
+  }
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
   // Calculate results based on the current cluster
   const calculateResults = () => {
     let calculatedResults = {};
