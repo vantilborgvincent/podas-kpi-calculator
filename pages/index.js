@@ -49,7 +49,8 @@ export default function Home() {
           id: 4,
           title: "Voorraadwaarde",
           questions: [
-            { name: "inventoryValue", label: "Wat is de huidige totale waarde van je voorraad?", type: "number", placeholder: "€" }
+            { name: "inventoryValue", label: "Wat is de huidige totale waarde van je voorraad?", type: "number", placeholder: "€" },
+            { name: "inventoryRevenue", label: "Wat was je omzet over de afgelopen 12 maanden?", type: "number", placeholder: "€" }
           ],
           benchmark: "Richtlijn: voorraad onder 15-20% van jaaromzet.",
           interpretation: "Een relatief hoge voorraadwaarde kan wijzen op veel kapitaal dat vastzit. Dit hoeft niet negatief te zijn, zolang de voorraad nodig is om klantentevredenheid te waarborgen."
@@ -182,7 +183,12 @@ export default function Home() {
 
   // Handle input change for form fields
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    // Parse number inputs
+    const value = e.target.type === 'number' ? 
+      (e.target.value === '' ? '' : parseFloat(e.target.value)) : 
+      e.target.value;
+    
+    setFormData({ ...formData, [e.target.name]: value });
   };
 
   // Navigate to the next KPI question
@@ -209,62 +215,100 @@ export default function Home() {
     let calculatedResults = {};
     
     if (cluster === "cashflow") {
+      // Extract KPI-specific values
+      const kpi1_cogs = parseFloat(formData["cogs_kpi1"]) || 0;
+      const kpi1_avgInventory = parseFloat(formData["avgInventory_kpi1"]) || 1; // Avoid division by zero
+      
+      const kpi2_outOfStock = parseFloat(formData["outOfStock_kpi2"]) || 0;
+      const kpi2_totalRequests = parseFloat(formData["totalRequests_kpi2"]) || 1;
+      
+      const kpi3_openInvoices = parseFloat(formData["openInvoices_kpi3"]) || 0;
+      const kpi3_annualRevenue = parseFloat(formData["annualRevenue_kpi3"]) || 1;
+      
+      const kpi4_inventoryValue = parseFloat(formData["inventoryValue_kpi4"]) || 0;
+      const kpi4_inventoryRevenue = parseFloat(formData["inventoryRevenue_kpi4"]) || 1;
+      
       // Voorraadrotatie
-      const inventoryTurnover = formData.cogs / formData.avgInventory;
+      const inventoryTurnover = kpi1_cogs / kpi1_avgInventory;
       
       // Out-of-Stock Percentage
-      const outOfStockPercentage = (formData.outOfStock / formData.totalRequests) * 100;
+      const outOfStockPercentage = (kpi2_outOfStock / kpi2_totalRequests) * 100;
       
       // Days Sales Outstanding (DSO)
-      const dso = (formData.openInvoices / formData.annualRevenue) * 365;
+      const dso = (kpi3_openInvoices / kpi3_annualRevenue) * 365;
       
       // Voorraadwaarde vs Annual Revenue
-      const inventoryPercentage = (formData.inventoryValue / formData.annualRevenue) * 100;
+      const inventoryPercentage = (kpi4_inventoryValue / kpi4_inventoryRevenue) * 100;
       
       calculatedResults = {
-        "Voorraadrotatie": inventoryTurnover.toFixed(2) + " keer per jaar",
-        "Out-of-Stock Percentage": outOfStockPercentage.toFixed(2) + "%",
-        "Days Sales Outstanding (DSO)": dso.toFixed(1) + " dagen",
-        "Voorraadwaarde": inventoryPercentage.toFixed(2) + "% van jaaromzet"
+        "Voorraadrotatie": isNaN(inventoryTurnover) ? "0.00 keer per jaar" : inventoryTurnover.toFixed(2) + " keer per jaar",
+        "Out-of-Stock Percentage": isNaN(outOfStockPercentage) ? "0.00%" : outOfStockPercentage.toFixed(2) + "%",
+        "Days Sales Outstanding (DSO)": isNaN(dso) ? "0.0 dagen" : dso.toFixed(1) + " dagen",
+        "Voorraadwaarde": isNaN(inventoryPercentage) ? "0.00% van jaaromzet" : inventoryPercentage.toFixed(2) + "% van jaaromzet"
       };
     } 
     else if (cluster === "margin") {
+      // Extract KPI-specific values
+      const kpi1_revenue = parseFloat(formData["revenue_kpi1"]) || 0;
+      const kpi1_costOfSales = parseFloat(formData["costOfSales_kpi1"]) || 0;
+      
+      const kpi2_totalRevenue = parseFloat(formData["totalRevenue_kpi2"]) || 0;
+      const kpi2_totalOrders = parseFloat(formData["totalOrders_kpi2"]) || 1;
+      
+      const kpi3_returnedOrders = parseFloat(formData["returnedOrders_kpi3"]) || 0;
+      const kpi3_totalOrdersReturn = parseFloat(formData["totalOrdersReturn_kpi3"]) || 1;
+      
+      const kpi4_productMargin = parseFloat(formData["productMargin_kpi4"]) || 0;
+      
       // Brutomarge
-      const grossMargin = ((formData.revenue - formData.costOfSales) / formData.revenue) * 100;
+      const grossMargin = kpi1_revenue > 0 ? 
+        ((kpi1_revenue - kpi1_costOfSales) / kpi1_revenue) * 100 : 0;
       
       // Gemiddelde Orderwaarde
-      const averageOrderValue = formData.totalRevenue / formData.totalOrders;
+      const averageOrderValue = kpi2_totalOrders > 0 ?
+        kpi2_totalRevenue / kpi2_totalOrders : 0;
       
       // Retourpercentage
-      const returnRate = (formData.returnedOrders / formData.totalOrdersReturn) * 100;
-      
-      // Productwinstgevendheid - direct from input
+      const returnRate = (kpi3_returnedOrders / kpi3_totalOrdersReturn) * 100;
       
       calculatedResults = {
-        "Brutomarge": grossMargin.toFixed(2) + "%",
-        "Gemiddelde Orderwaarde": "€" + averageOrderValue.toFixed(2),
-        "Retourpercentage": returnRate.toFixed(2) + "%",
-        "Productwinstgevendheid": formData.productMargin + "%"
+        "Brutomarge": isNaN(grossMargin) ? "0.00%" : grossMargin.toFixed(2) + "%",
+        "Gemiddelde Orderwaarde": isNaN(averageOrderValue) ? "€0.00" : "€" + averageOrderValue.toFixed(2),
+        "Retourpercentage": isNaN(returnRate) ? "0.00%" : returnRate.toFixed(2) + "%",
+        "Productwinstgevendheid": isNaN(kpi4_productMargin) ? "0%" : kpi4_productMargin + "%"
       };
     } 
     else if (cluster === "service") {
+      // Extract KPI-specific values
+      const kpi1_perfectOrders = parseFloat(formData["perfectOrders_kpi1"]) || 0;
+      const kpi1_totalOrdersPerf = parseFloat(formData["totalOrdersPerf_kpi1"]) || 1;
+      
+      const kpi2_correctPicks = parseFloat(formData["correctPicks_kpi2"]) || 0;
+      const kpi2_totalPicks = parseFloat(formData["totalPicks_kpi2"]) || 1;
+      
+      const kpi3_totalDeliveryDays = parseFloat(formData["totalDeliveryDays_kpi3"]) || 0;
+      const kpi3_totalDeliveries = parseFloat(formData["totalDeliveries_kpi3"]) || 1;
+      
+      const kpi4_highScores = parseFloat(formData["highScores_kpi4"]) || 0;
+      const kpi4_totalFeedback = parseFloat(formData["totalFeedback_kpi4"]) || 1;
+      
       // Perfect Order Rate
-      const perfectOrderRate = (formData.perfectOrders / formData.totalOrdersPerf) * 100;
+      const perfectOrderRate = (kpi1_perfectOrders / kpi1_totalOrdersPerf) * 100;
       
       // Order Pick Accuracy
-      const pickAccuracy = (formData.correctPicks / formData.totalPicks) * 100;
+      const pickAccuracy = (kpi2_correctPicks / kpi2_totalPicks) * 100;
       
       // Gemiddelde Levertijd
-      const averageDeliveryTime = formData.totalDeliveryDays / formData.totalDeliveries;
+      const averageDeliveryTime = kpi3_totalDeliveryDays / kpi3_totalDeliveries;
       
       // CSAT
-      const csatScore = (formData.highScores / formData.totalFeedback) * 100;
+      const csatScore = (kpi4_highScores / kpi4_totalFeedback) * 100;
       
       calculatedResults = {
-        "Perfect Order Rate": perfectOrderRate.toFixed(2) + "%",
-        "Order Pick Accuracy": pickAccuracy.toFixed(2) + "%",
-        "Gemiddelde Levertijd": averageDeliveryTime.toFixed(1) + " dagen",
-        "Klanttevredenheidsscore": csatScore.toFixed(2) + "%"
+        "Perfect Order Rate": isNaN(perfectOrderRate) ? "0.00%" : perfectOrderRate.toFixed(2) + "%",
+        "Order Pick Accuracy": isNaN(pickAccuracy) ? "0.00%" : pickAccuracy.toFixed(2) + "%",
+        "Gemiddelde Levertijd": isNaN(averageDeliveryTime) ? "0.0 dagen" : averageDeliveryTime.toFixed(1) + " dagen",
+        "Klanttevredenheidsscore": isNaN(csatScore) ? "0.00%" : csatScore.toFixed(2) + "%"
       };
     }
     
@@ -305,17 +349,17 @@ export default function Home() {
       results: JSON.stringify(results, null, 2),
     };
     
-emailjs
-  .send(
-    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_sdzz11f",
-    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_guwz73d",
-    templateParams,
-    process.env.NEXT_PUBLIC_EMAILJS_USER_ID || "-FsQ2G8CmhnyhIQZW"
-  )
-  .then(() => {
-    setStep("thankyou");
-  })
-  .catch((error) => console.error("Email error:", error));
+    emailjs
+      .send(
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_sdzz11f",
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_guwz73d",
+        templateParams,
+        process.env.NEXT_PUBLIC_EMAILJS_USER_ID || "-FsQ2G8CmhnyhIQZW"
+      )
+      .then(() => {
+        setStep("thankyou");
+      })
+      .catch((error) => console.error("Email error:", error));
   };
 
   // Reset the flow to start again
@@ -734,181 +778,3 @@ emailjs
             </div>
           </div>
         )}
-
-        {/* Results Page */}
-        {step === "results" && (
-          <div style={styles.card}>
-            <h2 style={{...styles.title, fontSize: "26px", marginBottom: "5px"}}>
-              Resultaat van jouw {clusters[cluster].name.toLowerCase()} analyse
-            </h2>
-            
-            {/* KPI Results */}
-            <div style={styles.results}>
-              <h3 style={styles.resultHeading}>Berekende KPI's:</h3>
-              
-              {results.kpiResults && Object.entries(results.kpiResults).map(([key, value], idx) => {
-                const currentKPI = clusters[cluster].kpis.find(kpi => kpi.title === key || key.includes(kpi.title));
-                
-                return (
-                  <div key={idx} style={styles.resultSection}>
-                    <div style={styles.resultItem}>
-                      <strong>{key}:</strong>
-                      <span>{value}</span>
-                    </div>
-                    
-                    {currentKPI && (
-                      <>
-                        <div style={styles.benchmarkContainer}>
-                          <div style={styles.benchmarkHeading}>Benchmark:</div>
-                          <div>{currentKPI.benchmark}</div>
-                        </div>
-                        
-                        <div style={styles.interpretationContainer}>
-                          <div style={styles.interpretationText}>
-                            {currentKPI.interpretation}
-                          </div>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                );
-              })}
-            </div>
-            
-            {/* Data Maturity Summary */}
-            <div style={styles.results}>
-              <h3 style={styles.resultHeading}>Data Maturity:</h3>
-              
-              <div style={styles.resultItem}>
-                <strong>Percentage direct beschikbare data:</strong>
-                <span>{results.dataMaturity?.["Direct beschikbaar"] || 0}%</span>
-              </div>
-              
-              <div style={styles.resultItem}>
-                <strong>Percentage zonder manuele inspanning:</strong>
-                <span>{results.dataMaturity?.["Zonder manuele inspanning"] || 0}%</span>
-              </div>
-              
-              <div style={styles.interpretationContainer}>
-                <div style={styles.interpretationText}>
-                  Een hogere datascore duidt op snelle toegang tot essentiële informatie. Lagere scores kunnen betekenen dat inzichten trager of minder betrouwbaar zijn.
-                </div>
-              </div>
-            </div>
-            
-            <div style={{marginTop: "30px", padding: "20px", backgroundColor: "#F5F7F9", borderRadius: "8px"}}>
-              <p style={{fontSize: "16px", lineHeight: "1.6", fontStyle: "italic", color: "#4B5563"}}>
-                De KPI's geven samen een beeld van jouw {cluster === "cashflow" ? "cashflowbeheer" : 
-                                                        cluster === "margin" ? "rendabiliteit" : 
-                                                        "klanttevredenheid"}. 
-                Geen enkele KPI op zichzelf is bepalend. De onderlinge balans is essentieel.
-              </p>
-            </div>
-            
-            {/* Contact Form */}
-            <h3 style={{...styles.title, fontSize: "22px", marginTop: "40px", marginBottom: "20px"}}>
-              Ontvang jouw resultaten per e-mail
-            </h3>
-            
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Bedrijfsnaam:</label>
-              <input 
-                name="company" 
-                style={styles.input} 
-                onChange={handleInputChange}
-                value={formData.company || ""} 
-              />
-            </div>
-            
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Naam contactpersoon:</label>
-              <input 
-                name="name" 
-                style={styles.input} 
-                onChange={handleInputChange}
-                value={formData.name || ""} 
-              />
-            </div>
-            
-            <div style={styles.formGroup}>
-              <label style={styles.label}>E-mailadres:</label>
-              <input 
-                name="email" 
-                type="email" 
-                style={styles.input} 
-                onChange={handleInputChange}
-                value={formData.email || ""} 
-              />
-            </div>
-            
-            <div style={styles.formGroup}>
-              <label style={styles.label}>Telefoonnummer (optioneel):</label>
-              <input 
-                name="phone" 
-                style={styles.input} 
-                onChange={handleInputChange}
-                value={formData.phone || ""} 
-              />
-            </div>
-            
-            <div style={styles.buttonContainer}>
-              <button 
-                onClick={() => setStep("cluster")}
-                style={styles.secondaryButton}
-                onMouseOver={e => e.target.style.backgroundColor = styles.secondaryButtonHover.backgroundColor}
-                onMouseOut={e => e.target.style.backgroundColor = styles.secondaryButton.backgroundColor}
-              >
-                Andere analyse uitvoeren
-              </button>
-              
-              <button 
-                onClick={sendEmail} 
-                style={styles.button}
-                onMouseOver={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
-                onMouseOut={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-              >
-                Vraag gratis proces-analyse aan
-              </button>
-            </div>
-          </div>
-        )}
-
-        {/* Thank You Page */}
-        {step === "thankyou" && (
-          <div style={styles.card}>
-            <div style={{textAlign: "center"}}>
-              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="40" cy="40" r="40" fill="#E7440D" fillOpacity="0.1"/>
-                <path d="M32 40L38 46L48 34" stroke="#E7440D" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
-              </svg>
-              
-              <h2 style={{...styles.title, fontSize: "26px", marginTop: "20px"}}>
-                Bedankt voor het invullen!
-              </h2>
-              
-              <p style={{fontSize: "18px", lineHeight: "1.6", marginTop: "20px"}}>
-                U ontvangt uw resultaten binnenkort per e-mail. <br/>
-                Wij nemen graag contact met u op om deze te bespreken.
-              </p>
-              
-              <div style={{marginTop: "40px"}}>
-                <button 
-                  onClick={resetFlow}
-                  style={{...styles.button, textDecoration: "none", display: "inline-block"}}
-                  onMouseOver={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
-                  onMouseOut={e => e.target.style.backgroundColor = styles.button.backgroundColor}
-                >
-                  Terug naar begin
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        
-        <div style={styles.footer}>
-          <p>© {new Date().getFullYear()} Podas - Making digital Automation and AI accessible to every business</p>
-        </div>
-      </div>
-    </>
-  );
-  }
