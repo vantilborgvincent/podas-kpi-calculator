@@ -306,7 +306,12 @@ export default function Home() {
     };
     
     emailjs
-      .send("service_sdzz11f", "template_guwz73d", templateParams, "-FsQ2G8CmhnyhIQZW")
+  .send(
+    process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_sdzz11f",
+    process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_guwz73d",
+    templateParams,
+    process.env.NEXT_PUBLIC_EMAILJS_USER_ID || "-FsQ2G8CmhnyhIQZW"
+  )
       .then(() => {
         setStep("thankyou");
       })
