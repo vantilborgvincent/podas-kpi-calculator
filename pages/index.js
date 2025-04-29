@@ -624,6 +624,7 @@ export default function Home() {
         <div style={styles.progressText}>{progress}% voltooid</div>
       </div>
     );
+}
   };
 
   // Main rendering
@@ -670,6 +671,188 @@ export default function Home() {
             </div>
           </div>
         )}
+
+        {/* Results Page */}
+        {step === "results" && (
+          <div style={styles.card}>
+            <h2 style={{...styles.title, fontSize: "26px", marginBottom: "5px"}}>
+              Resultaat van jouw {clusters[cluster].name.toLowerCase()} analyse
+            </h2>
+            
+            {/* KPI Results */}
+            <div style={styles.results}>
+              <h3 style={styles.resultHeading}>Berekende KPI's:</h3>
+              
+              {results.kpiResults && Object.entries(results.kpiResults).map(([key, value], idx) => {
+                // Find the matching KPI by looking for exact title or partial title match
+                const currentKPI = clusters[cluster].kpis.find(kpi => 
+                  kpi.title === key || 
+                  key.includes(kpi.title) || 
+                  kpi.title.includes(key)
+                );
+                
+                return (
+                  <div key={idx} style={styles.resultSection}>
+                    <div style={styles.resultItem}>
+                      <strong>{key}:</strong>
+                      <span>{value}</span>
+                    </div>
+                    
+                    {currentKPI && (
+                      <>
+                        <div style={styles.benchmarkContainer}>
+                          <div style={styles.benchmarkHeading}>Benchmark:</div>
+                          <div>{currentKPI.benchmark}</div>
+                        </div>
+                        
+                        <div style={styles.interpretationContainer}>
+                          <div style={styles.interpretationText}>
+                            {currentKPI.interpretation}
+                          </div>
+                        </div>
+                      </>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+            
+            {/* Data Maturity Summary */}
+            <div style={styles.results}>
+              <h3 style={styles.resultHeading}>Data Maturity:</h3>
+              
+              <div style={styles.resultItem}>
+                <strong>Percentage direct beschikbare data:</strong>
+                <span>{results.dataMaturity?.["Direct beschikbaar"] || 0}%</span>
+              </div>
+              
+              <div style={styles.resultItem}>
+                <strong>Percentage zonder manuele inspanning:</strong>
+                <span>{results.dataMaturity?.["Zonder manuele inspanning"] || 0}%</span>
+              </div>
+              
+              <div style={styles.interpretationContainer}>
+                <div style={styles.interpretationText}>
+                  Een hogere datascore duidt op snelle toegang tot essentiële informatie. Lagere scores kunnen betekenen dat inzichten trager of minder betrouwbaar zijn.
+                </div>
+              </div>
+            </div>
+            
+            <div style={{marginTop: "30px", padding: "20px", backgroundColor: "#F5F7F9", borderRadius: "8px"}}>
+              <p style={{fontSize: "16px", lineHeight: "1.6", fontStyle: "italic", color: "#4B5563"}}>
+                De KPI's geven samen een beeld van jouw {cluster === "cashflow" ? "cashflowbeheer" : 
+                                                        cluster === "margin" ? "rendabiliteit" : 
+                                                        "klanttevredenheid"}. 
+                Geen enkele KPI op zichzelf is bepalend. De onderlinge balans is essentieel.
+              </p>
+            </div>
+            
+            {/* Contact Form */}
+            <h3 style={{...styles.title, fontSize: "22px", marginTop: "40px", marginBottom: "20px"}}>
+              Ontvang jouw resultaten per e-mail
+            </h3>
+            
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Bedrijfsnaam:</label>
+              <input 
+                name="company" 
+                style={styles.input} 
+                onChange={handleInputChange}
+                value={formData.company || ""} 
+              />
+            </div>
+            
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Naam contactpersoon:</label>
+              <input 
+                name="name" 
+                style={styles.input} 
+                onChange={handleInputChange}
+                value={formData.name || ""} 
+              />
+            </div>
+            
+            <div style={styles.formGroup}>
+              <label style={styles.label}>E-mailadres:</label>
+              <input 
+                name="email" 
+                type="email" 
+                style={styles.input} 
+                onChange={handleInputChange}
+                value={formData.email || ""} 
+              />
+            </div>
+            
+            <div style={styles.formGroup}>
+              <label style={styles.label}>Telefoonnummer (optioneel):</label>
+              <input 
+                name="phone" 
+                style={styles.input} 
+                onChange={handleInputChange}
+                value={formData.phone || ""} 
+              />
+            </div>
+            
+            <div style={styles.buttonContainer}>
+              <button 
+                onClick={() => setStep("cluster")}
+                style={styles.secondaryButton}
+                onMouseOver={e => e.target.style.backgroundColor = styles.secondaryButtonHover.backgroundColor}
+                onMouseOut={e => e.target.style.backgroundColor = styles.secondaryButton.backgroundColor}
+              >
+                Andere analyse uitvoeren
+              </button>
+              
+              <button 
+                onClick={sendEmail} 
+                style={styles.button}
+                onMouseOver={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
+                onMouseOut={e => e.target.style.backgroundColor = styles.button.backgroundColor}
+              >
+                Vraag gratis proces-analyse aan
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Thank You Page */}
+        {step === "thankyou" && (
+          <div style={styles.card}>
+            <div style={{textAlign: "center"}}>
+              <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="40" cy="40" r="40" fill="#E7440D" fillOpacity="0.1"/>
+                <path d="M32 40L38 46L48 34" stroke="#E7440D" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+              
+              <h2 style={{...styles.title, fontSize: "26px", marginTop: "20px"}}>
+                Bedankt voor het invullen!
+              </h2>
+              
+              <p style={{fontSize: "18px", lineHeight: "1.6", marginTop: "20px"}}>
+                U ontvangt uw resultaten binnenkort per e-mail. <br/>
+                Wij nemen graag contact met u op om deze te bespreken.
+              </p>
+              
+              <div style={{marginTop: "40px"}}>
+                <button 
+                  onClick={resetFlow}
+                  style={{...styles.button, textDecoration: "none", display: "inline-block"}}
+                  onMouseOver={e => e.target.style.backgroundColor = styles.buttonHover.backgroundColor}
+                  onMouseOut={e => e.target.style.backgroundColor = styles.button.backgroundColor}
+                >
+                  Terug naar begin
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        <div style={styles.footer}>
+          <p>© {new Date().getFullYear()} Podas - Making digital Automation and AI accessible to every business</p>
+        </div>
+      </div>
+    </>
+  );
 
         {/* Cluster selection */}
         {step === "cluster" && (
@@ -777,5 +960,4 @@ export default function Home() {
               </button>
             </div>
           </div>
-        ),
-  }
+        )}
