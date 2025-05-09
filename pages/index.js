@@ -44,16 +44,6 @@ export default function Home() {
           ],
           benchmark: "Tussen 45 en 60 dagen",
           interpretation: "Een lagere DSO betekent dat klanten gemiddeld sneller betalen. Een hogere DSO kan cashflow onder druk zetten en vraagt om goede opvolging van openstaande facturen."
-        },
-        {
-          id: 4,
-          title: "Voorraadwaarde",
-          questions: [
-            { name: "inventoryValue", label: "Wat is de huidige totale waarde van je voorraad?", type: "number", placeholder: "€" },
-            { name: "annualRevenueInv", label: "Wat was je omzet over de afgelopen 12 maanden?", type: "number", placeholder: "€" }
-          ],
-          benchmark: "Richtlijn: voorraad onder 15-20% van jaaromzet.",
-          interpretation: "Een relatief hoge voorraadwaarde kan wijzen op veel kapitaal dat vastzit. Dit hoeft niet negatief te zijn, zolang de voorraad nodig is om klantentevredenheid te waarborgen."
         }
       ]
     },
@@ -62,13 +52,13 @@ export default function Home() {
       kpis: [
         {
           id: 1,
-          title: "Brutomarge %",
+          title: "Brutomarge % Best Presterend Product",
           questions: [
-            { name: "revenue", label: "Wat was je omzet afgelopen jaar?", type: "number", placeholder: "€" },
-            { name: "costOfSales", label: "Wat waren je totale inkoopkosten afgelopen jaar?", type: "number", placeholder: "€" }
+            { name: "revenue", label: "Wat was de omzet van je best presterende product/productgroep afgelopen jaar?", type: "number", placeholder: "€" },
+            { name: "costOfSales", label: "Wat waren de inkoopkosten van dit product/deze productgroep afgelopen jaar?", type: "number", placeholder: "€" }
           ],
           benchmark: "Sectorafhankelijk, typisch >30% in wholesale.",
-          interpretation: "Een hogere brutomarge wijst op sterkere prijskracht of efficiëntere inkoop. Een lagere marge kan competitief zijn, maar vergt volume om rendabel te blijven."
+          interpretation: "Een hogere brutomarge voor je best presterende product wijst op sterkere prijskracht of efficiëntere inkoop. Focus op je meest winstgevende producten kan leiden tot betere algemene bedrijfsprestaties."
         },
         {
           id: 2,
@@ -79,77 +69,38 @@ export default function Home() {
           ],
           benchmark: "Geen absolute norm.",
           interpretation: "Een hogere gemiddelde orderwaarde betekent dat klanten meer besteden per transactie. Dit kan bijdragen aan betere winstgevendheid."
-        },
-        {
-          id: 3,
-          title: "Retourpercentage",
-          questions: [
-            { name: "returnedOrders", label: "Hoeveel bestellingen zijn er retour gekomen het afgelopen jaar?", type: "number", placeholder: "aantal" },
-            { name: "totalOrdersReturn", label: "Hoeveel bestellingen waren er in totaal?", type: "number", placeholder: "aantal" }
-          ],
-          benchmark: "Lager dan 3–5%",
-          interpretation: "Een lager retourpercentage wijst vaak op goede productkwaliteit en duidelijke klantverwachtingen. Hogere retouren kunnen extra kosten veroorzaken."
-        },
-        {
-          id: 4,
-          title: "Productwinstgevendheid",
-          questions: [
-            { name: "productMargin", label: "Wat is de gemiddelde brutomarge (%) van je best verkopende productgroep?", type: "number", placeholder: "%" }
-          ],
-          benchmark: "Geen absolute norm.",
-          interpretation: "Een goede productmarge biedt meer flexibiliteit in pricing en marketingacties."
         }
       ]
     },
-    "service": {
-      name: "Servicekwaliteit & Groeiversnelling",
-      kpis: [
-        {
-          id: 1,
-          title: "Perfect Order Rate %",
-          questions: [
-            { name: "perfectOrders", label: "Hoeveel bestellingen werden foutloos geleverd het afgelopen jaar?", type: "number", placeholder: "aantal" },
-            { name: "totalOrdersPerf", label: "Hoeveel bestellingen in totaal?", type: "number", placeholder: "aantal" }
-          ],
-          benchmark: ">95%",
-          interpretation: "Een hoge perfect order rate wijst op een betrouwbare operatie en hoge klanttevredenheid."
-        },
-        {
-          id: 2,
-          title: "Order Pick Accuracy %",
-          questions: [
-            { name: "correctPicks", label: "Hoeveel orders werden correct gepickt?", type: "number", placeholder: "aantal" },
-            { name: "totalPicks", label: "Hoeveel orders gepickt in totaal?", type: "number", placeholder: "aantal" }
-          ],
-          benchmark: ">98%",
-          interpretation: "Hoge pick-accuracy voorkomt fouten, retouren en verhoogt de klantentevredenheid."
-        },
-        {
-          id: 3,
-          title: "Gemiddelde Levertijd",
-          questions: [
-            { name: "totalDeliveryDays", label: "Totaal aantal dagen tussen bestelling en levering?", type: "number", placeholder: "dagen" },
-            { name: "totalDeliveries", label: "Totaal aantal bestellingen?", type: "number", placeholder: "aantal" }
-          ],
-          benchmark: "Geen harde norm, sectorafhankelijk.",
-          interpretation: "Snellere levering verhoogt klantentevredenheid, maar moet in balans blijven met nauwkeurigheid."
-        },
-        {
-          id: 4,
-          title: "Klanttevredenheidsscore (CSAT)",
-          questions: [
-            { name: "highScores", label: "Aantal klanten dat een score van 4 of 5 gaf?", type: "number", placeholder: "aantal" },
-            { name: "totalFeedback", label: "Aantal klanten dat feedback gaf?", type: "number", placeholder: "aantal" }
-          ],
-          benchmark: "80–85%+ tevreden klanten.",
-          interpretation: "Hoge tevredenheidscijfers correleren sterk met herhaalaankopen en klantloyaliteit."
-        }
-      ]
-    }
-  };
+   "service": {
+    name: "Servicekwaliteit & Groeiversnelling",
+    kpis: [
+      {
+        id: 1,
+        title: "Perfect Order Rate %",
+        questions: [
+          { name: "perfectOrders", label: "Hoeveel bestellingen werden op tijd, correct en zonder klachten geleverd het afgelopen jaar?", type: "number", placeholder: "aantal" },
+          { name: "totalOrdersPerf", label: "Hoeveel bestellingen in totaal?", type: "number", placeholder: "aantal" }
+        ],
+        benchmark: ">95%",
+        interpretation: "Een hoge perfect order rate wijst op een betrouwbare operatie en hoge klanttevredenheid. Dit betekent dat orders op tijd, compleet en zonder fouten worden geleverd."
+      },
+      {
+        id: 2,
+        title: "Gemiddelde Levertijd",
+        questions: [
+          { name: "totalDeliveryDays", label: "Totaal aantal dagen tussen bestelling en levering?", type: "number", placeholder: "dagen" },
+          { name: "totalDeliveries", label: "Totaal aantal bestellingen?", type: "number", placeholder: "aantal" }
+        ],
+        benchmark: "Sectorafhankelijk, typisch <3-5 dagen.",
+        interpretation: "Een kortere gemiddelde levertijd draagt bij aan hogere klanttevredenheid en kan een concurrentievoordeel zijn in de markt."
+      }
+    ]
+  }
+}; // <-- Deze afsluitende accolade en puntkomma mist waarschijnlijk
 
-  // Data maturity follow-up questions (same for all KPIs)
-  const dataMaturityQuestions = [
+// Data maturity follow-up questions (same for all KPIs)
+const dataMaturityQuestions = [
     {
       name: "dataAvailability",
       label: "Was deze informatie direct beschikbaar?",
@@ -188,29 +139,31 @@ export default function Home() {
 
   // Navigate to the next KPI question
   const handleNextKPI = () => {
-  if (currentKPI < clusters[cluster].kpis.length) {
-    setCurrentKPI(currentKPI + 1);
-  } else {
-    calculateResults();
-    setStep("results");
-  }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+    if (currentKPI < clusters[cluster].kpis.length) {
+      setCurrentKPI(currentKPI + 1);
+    } else {
+      calculateResults();
+      setStep("results");
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
   // Navigate to the previous KPI question
   const handlePrevKPI = () => {
-  if (currentKPI > 1) {
-    setCurrentKPI(currentKPI - 1);
-  } else {
-    setStep("cluster");
-  }
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
+    if (currentKPI > 1) {
+      setCurrentKPI(currentKPI - 1);
+    } else {
+      setStep("cluster");
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
   // Calculate results based on the current cluster
   const calculateResults = () => {
     let calculatedResults = {};
     
     if (cluster === "cashflow") {
-      // Voorraadrotatie - corrected according to specs
+      // Voorraadrotatie
       const inventoryTurnover = formData.cogs_kpi1 / formData.avgInventory_kpi1;
       
       // Out-of-Stock Percentage
@@ -219,53 +172,34 @@ export default function Home() {
       // Days Sales Outstanding (DSO)
       const dso = (formData.openInvoices_kpi3 / formData.annualRevenue_kpi3) * 365;
       
-      // Voorraadwaarde vs Annual Revenue
-      const inventoryPercentage = (formData.inventoryValue_kpi4 / formData.annualRevenueInv_kpi4) * 100;
-      
       calculatedResults = {
         "Voorraadrotatie": inventoryTurnover.toFixed(2) + " keer per jaar",
         "Out-of-Stock Percentage": outOfStockPercentage.toFixed(2) + "%",
-        "Days Sales Outstanding (DSO)": dso.toFixed(1) + " dagen",
-        "Voorraadwaarde": inventoryPercentage.toFixed(2) + "% van jaaromzet"
+        "Days Sales Outstanding (DSO)": dso.toFixed(1) + " dagen"
       };
     } 
     else if (cluster === "margin") {
-      // Brutomarge - corrected according to specs
+      // Brutomarge voor best presterend product
       const grossMargin = ((formData.revenue_kpi1 - formData.costOfSales_kpi1) / formData.revenue_kpi1) * 100;
       
       // Gemiddelde Orderwaarde
       const averageOrderValue = formData.totalRevenue_kpi2 / formData.totalOrders_kpi2;
       
-      // Retourpercentage
-      const returnRate = (formData.returnedOrders_kpi3 / formData.totalOrdersReturn_kpi3) * 100;
-      
-      // Productwinstgevendheid - direct from input
-      
       calculatedResults = {
-        "Brutomarge": grossMargin.toFixed(2) + "%",
-        "Gemiddelde Orderwaarde": "€" + averageOrderValue.toFixed(2),
-        "Retourpercentage": returnRate.toFixed(2) + "%",
-        "Productwinstgevendheid": formData.productMargin_kpi4 + "%"
+        "Brutomarge % Best Presterend Product": grossMargin.toFixed(2) + "%",
+        "Gemiddelde Orderwaarde": "€" + averageOrderValue.toFixed(2)
       };
     } 
     else if (cluster === "service") {
       // Perfect Order Rate
       const perfectOrderRate = (formData.perfectOrders_kpi1 / formData.totalOrdersPerf_kpi1) * 100;
       
-      // Order Pick Accuracy
-      const pickAccuracy = (formData.correctPicks_kpi2 / formData.totalPicks_kpi2) * 100;
-      
       // Gemiddelde Levertijd
-      const averageDeliveryTime = formData.totalDeliveryDays_kpi3 / formData.totalDeliveries_kpi3;
-      
-      // CSAT
-      const csatScore = (formData.highScores_kpi4 / formData.totalFeedback_kpi4) * 100;
+      const averageDeliveryTime = formData.totalDeliveryDays_kpi2 / formData.totalDeliveries_kpi2;
       
       calculatedResults = {
         "Perfect Order Rate": perfectOrderRate.toFixed(2) + "%",
-        "Order Pick Accuracy": pickAccuracy.toFixed(2) + "%",
-        "Gemiddelde Levertijd": averageDeliveryTime.toFixed(1) + " dagen",
-        "Klanttevredenheidsscore": csatScore.toFixed(2) + "%"
+        "Gemiddelde Levertijd": averageDeliveryTime.toFixed(1) + " dagen"
       };
     }
     
@@ -309,10 +243,10 @@ export default function Home() {
     // Using environment variables for emailjs configuration with fallbacks
     emailjs
       .send(
-        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_sdzz11f",
-        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_guwz73d",
+        process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID || "service_km69kz8",
+        process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || "template_ar28jsb",
         templateParams,
-        process.env.NEXT_PUBLIC_EMAILJS_USER_ID || "-FsQ2G8CmhnyhIQZW"
+        process.env.NEXT_PUBLIC_EMAILJS_USER_ID || "JOosJg3saVk9dJfaR"
       )
       .then(() => {
         setStep("thankyou");
@@ -325,7 +259,7 @@ export default function Home() {
     setStep("start");
     setCluster("");
     setCurrentKPI(1);
-    setFormData({});
+    setFormData({}); // Dit moet de form data volledig wissen
     setResults({});
   };
   // Styles definition
@@ -560,7 +494,7 @@ export default function Home() {
     }
     
     // If we're in KPI questions
-    const totalKPIs = clusters[cluster]?.kpis.length || 4;
+    const totalKPIs = clusters[cluster]?.kpis.length || 1;
     return Math.round((currentKPI / totalKPIs) * 100);
   };
 
@@ -608,11 +542,11 @@ export default function Home() {
           <div style={styles.card}>
             <h1 style={styles.title}>Kies wat je wilt analyseren</h1>
             <p style={styles.subtitle}>
-              Selecteer hieronder het domein waarin je vandaag jouw bedrijfsvoering wilt laten analyseren.
-              We brengen enkele kern-KPI's in kaart en tonen hoe jouw situatie zich verhoudt tot gebruikelijke benchmarks.
+              Selecteer op volgende pagina het domein dat je wilt analyseren.
+              We brengen enkele kern-KPI's in kaart en analyseren de toegankelijkheid van jouw data.
             </p>
             <p style={{...styles.subtitle, fontSize: "16px", fontStyle: "italic"}}>
-              Deze analyse is objectief. Er worden geen adviezen gegeven.
+              Deze analyse is objectief, jouw bedrijfsdata wordt niet opgeslagen en er worden geen adviezen gegeven.
               Belangrijk: prestaties moeten altijd bekeken worden in balans met elkaar, niet afzonderlijk.
             </p>
             <div style={{textAlign: "center", marginTop: "30px"}}>
@@ -655,7 +589,7 @@ export default function Home() {
               </button>
               
               <button
-style={styles.clusterButton}
+                style={styles.clusterButton}
                 onMouseOver={e => e.target.style.backgroundColor = styles.clusterButtonHover.backgroundColor}
                 onMouseOut={e => e.target.style.backgroundColor = styles.clusterButton.backgroundColor}
                 onClick={() => handleClusterSelect("service")}
@@ -666,7 +600,8 @@ style={styles.clusterButton}
             </div>
           </div>
         )}
-{/* KPI Questions */}
+        
+        {/* KPI Questions */}
         {step === "kpi" && cluster && (
           <div style={styles.card}>
             <h2 style={{...styles.title, fontSize: "24px", marginBottom: "10px"}}>
@@ -746,7 +681,8 @@ style={styles.clusterButton}
             </div>
           </div>
         )}
-{/* Results Page */}
+        
+        {/* Results Page */}
         {step === "results" && (
           <div style={styles.card}>
             <h2 style={{...styles.title, fontSize: "26px", marginBottom: "5px"}}>
@@ -757,39 +693,38 @@ style={styles.clusterButton}
             <div style={styles.results}>
               <h3 style={styles.resultHeading}>Berekende KPI's:</h3>
               
-{results.kpiResults && Object.entries(results.kpiResults).map(([key, value], idx) => {
-    const currentKPI = clusters[cluster].kpis.find(kpi => kpi.title === key || key.includes(kpi.title));
+              {results.kpiResults && Object.entries(results.kpiResults).map(([key, value], idx) => {
+                  const currentKPI = clusters[cluster].kpis.find(kpi => kpi.title === key || key.includes(kpi.title));
 
-    return (
-      <div key={idx} style={styles.resultSection}>
-        <div style={styles.resultItem}>
-          <strong>{key}:</strong>
-          <span>{value}</span>
-        </div>
+                  return (
+                    <div key={idx} style={styles.resultSection}>
+                      <div style={styles.resultItem}>
+                        <strong>{key}:</strong>
+                        <span>{value}</span>
+                      </div>
 
-        {currentKPI && (
-          <>
-            <div style={styles.benchmarkContainer}>
-              <div style={styles.benchmarkHeading}>Benchmark:</div>
-              <div>{currentKPI.benchmark}</div>
-            </div>
-            
-            <div style={styles.interpretationContainer}>
-              <div style={styles.interpretationText}>
-                {currentKPI.interpretation}
-              </div>
-            </div>
-          </>
-        )}
-      </div>
-    );
-})}
+                      {currentKPI && (
+                        <>
+                          <div style={styles.benchmarkContainer}>
+                            <div style={styles.benchmarkHeading}>Benchmark:</div>
+                            <div>{currentKPI.benchmark}</div>
+                          </div>
+                          
+                          <div style={styles.interpretationContainer}>
+                            <div style={styles.interpretationText}>
+                              {currentKPI.interpretation}
+                            </div>
+                          </div>
+                        </>
+                      )}
+                    </div>
+                  );
+              })}
             </div>
             
             {/* Data Maturity Summary */}
             <div style={styles.results}>
               <h3 style={styles.resultHeading}>Data Maturity:</h3>
-              
               <div style={styles.resultItem}>
                 <strong>Percentage direct beschikbare data:</strong>
                 <span>{results.dataMaturity?.["Direct beschikbaar"] || 0}%</span>
@@ -818,7 +753,7 @@ style={styles.clusterButton}
             
             {/* Contact Form */}
             <h3 style={{...styles.title, fontSize: "22px", marginTop: "40px", marginBottom: "20px"}}>
-              Ontvang jouw resultaten per e-mail
+              Gratis automatisatie analyse? Laat je gegevens achter
             </h3>
             
             <div style={styles.formGroup}>
@@ -864,7 +799,7 @@ style={styles.clusterButton}
             
             <div style={styles.buttonContainer}>
               <button 
-                onClick={() => setStep("cluster")}
+                onClick={() => resetFlow("cluster")}
                 style={styles.secondaryButton}
                 onMouseOver={e => e.target.style.backgroundColor = styles.secondaryButtonHover.backgroundColor}
                 onMouseOut={e => e.target.style.backgroundColor = styles.secondaryButton.backgroundColor}
@@ -883,7 +818,8 @@ style={styles.clusterButton}
             </div>
           </div>
         )}
-{/* Thank You Page */}
+
+        {/* Thank You Page */}
         {step === "thankyou" && (
           <div style={styles.card}>
             <div style={{textAlign: "center"}}>
